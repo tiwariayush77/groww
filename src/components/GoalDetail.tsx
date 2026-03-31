@@ -39,9 +39,9 @@ const GoalDetail: React.FC<GoalDetailProps> = ({ navigateTo }) => {
 
   return (
     <div className="flex flex-col pb-24 gap-6 pt-3">
-      {/* Goal header card */}
-      <section className="px-4">
-        <div className="bg-white rounded-xl p-5 shadow-secondary border-light">
+      {/* Goal header - Refactored to remove card soup */}
+      <section>
+        <div className="mx-4 border-t border-[#F0F0F0] py-6">
           <h2 className="text-title">🎓 Higher Education</h2>
           <p className="text-label mt-1">₹47,00,000 needed by June 2037 (11 years)</p>
           

@@ -23,12 +23,12 @@ const GoalsContent: React.FC<GoalsContentProps> = ({ navigateTo }) => {
         </div>
       </section>
 
-      {/* Goal Cards */}
+      {/* Goal Cards - Refactored to remove card soup */}
       <section>
         <h2 className="text-micro px-4 mb-2">Active Goals</h2>
-        <div className="flex flex-col gap-3 px-4">
+        <div className="mx-4 border-t border-[#F0F0F0]">
           {/* Goal 1 */}
-          <div className="bg-white rounded-xl p-4 shadow-secondary border-light interactive">
+          <div className="py-6 border-b border-[#F0F0F0] interactive">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="text-lg">🏠</span>
@@ -50,20 +50,20 @@ const GoalsContent: React.FC<GoalsContentProps> = ({ navigateTo }) => {
               </div>
             </div>
 
-            <div className="mt-4 bg-groww-green/5 rounded-lg p-3">
+            <div className="mt-4 bg-groww-green/5 rounded-lg p-3 border border-groww-green/10">
               <p className="text-[12px] text-groww-green font-medium leading-relaxed">
                 At current pace, you'll reach ₹15.2L by Nov 2030. You're on track! 🎉
               </p>
             </div>
             <div className="flex justify-end mt-3 pt-3 border-t border-[#F5F5F5]">
-              <button className="text-[12px] text-primary font-bold flex items-center gap-1">
+              <button className="text-[12px] text-primary font-bold flex items-center gap-1 btn-interactive">
                 View breakdown <Icons.ChevronRight className="w-3 h-3" />
               </button>
             </div>
           </div>
 
           {/* Goal 2 */}
-          <div className="bg-white rounded-xl p-4 shadow-secondary border-light interactive">
+          <div className="py-6 border-b border-[#F0F0F0] interactive">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="text-lg">🎓</span>
@@ -85,7 +85,7 @@ const GoalsContent: React.FC<GoalsContentProps> = ({ navigateTo }) => {
               </div>
             </div>
 
-            <div id="goal-gap-indicator" className="mt-4 bg-groww-amber/5 rounded-lg p-3">
+            <div id="tour-goal-gap" className="mt-4 bg-groww-amber/5 rounded-lg p-3 border border-groww-amber/10">
               <div className="flex justify-between text-[12px] mb-1">
                 <span className="text-text-2">Current SIPs will build</span>
                 <span className="text-groww-amber font-bold">₹31L by 2037</span>
@@ -116,7 +116,7 @@ const GoalsContent: React.FC<GoalsContentProps> = ({ navigateTo }) => {
           </div>
 
           {/* Goal 3 */}
-          <div className="bg-white rounded-xl p-4 shadow-secondary border-light interactive">
+          <div className="py-6 border-b border-[#F0F0F0] interactive">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="text-lg">🌴</span>
@@ -138,7 +138,7 @@ const GoalsContent: React.FC<GoalsContentProps> = ({ navigateTo }) => {
               </div>
             </div>
 
-            <div className="mt-4 bg-groww-red/5 rounded-lg p-3">
+            <div className="mt-4 bg-groww-red/5 rounded-lg p-3 border border-groww-red/10">
               <p className="text-[12px] text-groww-red font-medium leading-relaxed">
                 At current rate, you'll retire with ₹1.1Cr — 45% short of your ₹2Cr target. Start a dedicated retirement SIP now.
               </p>
@@ -155,12 +155,12 @@ const GoalsContent: React.FC<GoalsContentProps> = ({ navigateTo }) => {
       {/* Not started goals */}
       <section>
         <h2 className="text-micro px-4 mb-2">Goals you haven't started yet</h2>
-        <div className="flex flex-col gap-3 px-4">
+        <div className="mx-4 border-t border-[#F0F0F0]">
           {[
             { emoji: '🚗', name: 'Buy a Car', target: '₹8,00,000' },
             { emoji: '✈️', name: 'World Trip', target: '₹3,00,000' },
           ].map((goal, i) => (
-            <div key={i} className="bg-white border border-[#F5F5F5] border-dashed rounded-xl p-4 interactive">
+            <div key={i} className="py-5 border-b border-[#F0F0F0] interactive">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <span className="text-lg">{goal.emoji}</span>

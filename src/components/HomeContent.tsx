@@ -54,19 +54,18 @@ const HomeContent: React.FC<HomeContentProps> = ({ navigateTo, isCrashSimActive,
 
       {/* Feature 5: Portfolio Health Score */}
       <section className="px-4">
-        <div id="health-score-card" className="bg-white rounded-xl shadow-primary p-4 relative overflow-hidden">
+        <div id="tour-health-score" className="bg-white rounded-[16px] border border-[#F0F0F0] p-4 relative overflow-hidden">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-title">Portfolio Health</h3>
-            <div className="flex items-center gap-1 text-groww-amber bg-groww-amber-bg px-2 py-0.5 rounded text-[10px] font-bold">
-              <Icons.AlertCircle className="w-3 h-3" />
-              NEEDS ATTENTION
+            <h3 className="text-[13px] font-semibold text-[#1F1F1F]">Portfolio Health Score</h3>
+            <div className="flex items-center gap-1 text-primary bg-primary-bg px-2 py-1 rounded-[4px] text-[10px] font-bold">
+              EXCELLENT
             </div>
           </div>
 
           <div className="flex items-center gap-6 mb-4">
             {/* Donut Chart */}
             <div className="relative w-24 h-24 flex-shrink-0">
-              <svg className="w-full h-full transform -rotate-90 drop-shadow-[0_4px_8px_rgba(255,152,0,0.25)]">
+              <svg className="w-full h-full transform -rotate-90">
                 <circle
                   cx="48"
                   cy="48"
@@ -79,16 +78,16 @@ const HomeContent: React.FC<HomeContentProps> = ({ navigateTo, isCrashSimActive,
                   cx="48"
                   cy="48"
                   r="40"
-                  stroke="#FF9800"
+                  stroke="#00D09C"
                   strokeWidth="8"
                   fill="transparent"
                   strokeDasharray={2 * Math.PI * 40}
-                  strokeDashoffset={2 * Math.PI * 40 * (1 - 0.62)}
+                  strokeDashoffset={2 * Math.PI * 40 * (1 - 0.85)}
                   strokeLinecap="round"
                 />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-display leading-none" style={{ color: '#FF9800' }}>62</span>
+                <span className="text-[28px] font-bold text-primary leading-none">85</span>
                 <span className="text-[10px] text-text-3 font-bold">/100</span>
               </div>
             </div>
@@ -126,7 +125,7 @@ const HomeContent: React.FC<HomeContentProps> = ({ navigateTo, isCrashSimActive,
 
       {/* Feature 3: Tax Harvest Alert */}
       <section className="px-4">
-        <div id="tax-alert-card" className="bg-white rounded-xl shadow-primary overflow-hidden border-l-4 border-groww-green">
+        <div id="tour-tax-alert" className="bg-white rounded-xl shadow-primary overflow-hidden border-l-4 border-groww-green">
           <div className="p-4">
             <div className="flex items-center gap-2 mb-2">
               <div className="w-8 h-8 rounded-full bg-groww-green/10 flex items-center justify-center">
@@ -154,7 +153,7 @@ const HomeContent: React.FC<HomeContentProps> = ({ navigateTo, isCrashSimActive,
 
       {/* Feature 1: SIP Continuity Guard Simulation */}
       <section className="px-4">
-        <div id="crash-guard-card" className={`rounded-xl shadow-primary overflow-hidden transition-all duration-300 border-l-4 ${isCrashSimActive ? 'bg-groww-red/5 border-groww-red' : 'bg-white border-groww-amber'}`}>
+        <div id="tour-crash-guard" className={`rounded-xl shadow-primary overflow-hidden transition-all duration-300 border-l-4 ${isCrashSimActive ? 'bg-groww-red/5 border-groww-red' : 'bg-white border-groww-amber'}`}>
           <div className="p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">

@@ -53,7 +53,7 @@ const MFContent: React.FC<MFContentProps> = ({ navigateTo }) => {
       {/* Feature 4: Overlap Ribbon */}
       <section className="px-4">
         <div 
-          id="overlap-ribbon"
+          id="tour-overlap-ribbon"
           onClick={() => navigateTo('overlap')}
           className="bg-groww-amber/5 border border-groww-amber/20 rounded-xl p-4 flex items-center justify-between interactive"
         >
@@ -82,14 +82,14 @@ const MFContent: React.FC<MFContentProps> = ({ navigateTo }) => {
         </div>
       </section>
 
-      {/* Fund list */}
+      {/* Fund list - Refactored to remove card soup */}
       <section>
         <h2 className="text-micro px-4 mb-2">Your Holdings</h2>
-        <div className="flex flex-col gap-3 px-4">
+        <div className="mx-4 border-t border-[#F0F0F0]">
           {funds.map((fund, i) => (
-            <div key={i} className="bg-white rounded-xl p-4 shadow-secondary border-light interactive">
+            <div key={i} className="py-5 border-b border-[#F0F0F0] interactive">
               <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-[11px] ${fund.bgColor}`} style={{ color: fund.color }}>
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-[11px] ${fund.bgColor} border border-black/5`} style={{ color: fund.color }}>
                   {fund.id}
                 </div>
                 <div className="flex-1">
@@ -100,9 +100,12 @@ const MFContent: React.FC<MFContentProps> = ({ navigateTo }) => {
                     <span className="text-label text-text-2">{fund.sip}</span>
                   </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-[13px] font-bold text-text-1">{fund.value}</p>
-                  <p className="text-[12px] font-bold text-groww-green">{fund.ret}</p>
+                <div className="text-right flex items-center gap-2">
+                  <div>
+                    <p className="text-[13px] font-bold text-text-1">{fund.value}</p>
+                    <p className="text-[12px] font-bold text-groww-green">{fund.ret}</p>
+                  </div>
+                  <Icons.ChevronRight className="w-4 h-4 text-[#D0D0D0]" />
                 </div>
               </div>
               

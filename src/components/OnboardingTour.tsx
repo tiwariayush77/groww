@@ -9,59 +9,88 @@ interface TourStep {
 
 const steps: TourStep[] = [
   {
-    title: "Welcome to Groww AI Prototype",
-    body: "This prototype shows 6 AI-powered improvements to Groww. Each one is grounded in real user pain points. Tap Next to take the guided tour.",
+    title: "Welcome to the Groww AI Prototype",
+    body: "This prototype demos 6 AI-powered improvements grounded in real user pain points. Take the 60-second tour to see each feature.",
   },
   {
     title: "Your Portfolio Health Score",
     body: "A single 0–100 score that tells you how well your portfolio is doing across 4 dimensions. No more guessing.",
-    highlightId: "health-score-card",
+    highlightId: "tour-health-score",
   },
   {
     title: "₹15,500 in tax savings — unclaimed",
     body: "It's April 1. The new financial year just started. Groww could have reminded you to book profits before the deadline. Now you know for next year.",
-    highlightId: "tax-alert-card",
+    highlightId: "tour-tax-alert",
   },
   {
     title: "You own 7 funds but 3 portfolios",
     body: "64% of your holdings repeat across funds. This costs you ₹3,800/year in extra fees with no diversification benefit.",
-    highlightId: "overlap-ribbon",
+    highlightId: "tour-overlap-ribbon",
   },
   {
     title: "Your goals need a plan",
     body: "Your current SIPs will fall ₹16L short of your house goal. The gap calculator shows exactly what to add.",
-    highlightId: "goal-gap-indicator",
+    highlightId: "tour-goal-gap",
   },
   {
     title: "What happens when you panic",
     body: "When markets fall, most investors pause SIPs and lose ₹4–5L over a decade. Tap the simulation to see the intervention.",
-    highlightId: "crash-guard-card",
+    highlightId: "tour-crash-guard",
   },
 ];
 
 interface OnboardingTourProps {
   onComplete: () => void;
   onStepChange: (step: number) => void;
+  currentScreen: string;
 }
 
-export const OnboardingTour: React.FC<OnboardingTourProps> = ({ onComplete, onStepChange }) => {
+export const OnboardingTour: React.FC<OnboardingTourProps> = ({ onComplete, onStepChange, currentScreen }) => {
   const [currentStep, setCurrentStep] = React.useState(0);
   const [highlightRect, setHighlightRect] = React.useState<DOMRect | null>(null);
 
+  // Body scroll lock
   React.useEffect(() => {
-    onStepChange(currentStep);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
+
+  const measureElement = React.useCallback(() => {
     const highlightId = steps[currentStep].highlightId;
     if (highlightId) {
       const element = document.getElementById(highlightId);
       if (element) {
-        setHighlightRect(element.getBoundingClientRect());
+        // Scroll into view first
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Wait for scroll to complete before measuring
+        setTimeout(() => {
+          const rect = element.getBoundingClientRect();
+          if (rect.width > 0 && rect.height > 0) {
+            setHighlightRect(rect);
+          } else {
+            setHighlightRect(null);
+          }
+        }, 400);
       } else {
         setHighlightRect(null);
       }
     } else {
       setHighlightRect(null);
     }
-  }, [currentStep, onStepChange]);
+  }, [currentStep]);
+
+  // Re-measure on step or screen change
+  React.useEffect(() => {
+    onStepChange(currentStep);
+    measureElement();
+    
+    // Fallback re-measure after a delay for screen transitions
+    const timer = setTimeout(measureElement, 300);
+    return () => clearTimeout(timer);
+  }, [currentStep, currentScreen, onStepChange, measureElement]);
 
   const handleNext = () => {
     if (currentStep < steps.length - 1) {
@@ -75,60 +104,160 @@ export const OnboardingTour: React.FC<OnboardingTourProps> = ({ onComplete, onSt
     onComplete();
   };
 
+  const isStep0 = currentStep === 0;
+  const pad = 8;
+
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-none">
-      <div className="absolute inset-0 bg-black/65 pointer-events-auto" onClick={handleSkip} />
-      
-      {highlightRect && (
-        <div 
-          className="absolute z-[101] border-2 border-primary rounded-xl spotlight-hole pointer-events-none transition-all duration-300"
-          style={{
-            top: highlightRect.top - 4,
-            left: highlightRect.left - 4,
-            width: highlightRect.width + 8,
-            height: highlightRect.height + 8,
-          }}
-        />
+    <div className="fixed inset-0 z-[100] pointer-events-none">
+      {/* Four dark curtain panels surrounding the spotlight */}
+      {highlightRect && !isStep0 && (
+        <>
+          {/* TOP curtain */}
+          <div style={{
+            position: 'fixed',
+            top: 0, left: 0, right: 0,
+            height: Math.max(0, highlightRect.top - pad),
+            background: 'rgba(0,0,0,0.72)',
+            zIndex: 100,
+            pointerEvents: 'none'
+          }} />
+
+          {/* BOTTOM curtain */}
+          <div style={{
+            position: 'fixed',
+            top: highlightRect.bottom + pad,
+            left: 0, right: 0, bottom: 0,
+            background: 'rgba(0,0,0,0.72)',
+            zIndex: 100,
+            pointerEvents: 'none'
+          }} />
+
+          {/* LEFT curtain */}
+          <div style={{
+            position: 'fixed',
+            top: Math.max(0, highlightRect.top - pad),
+            left: 0,
+            width: Math.max(0, highlightRect.left - pad),
+            height: highlightRect.height + pad * 2,
+            background: 'rgba(0,0,0,0.72)',
+            zIndex: 100,
+            pointerEvents: 'none'
+          }} />
+
+          {/* RIGHT curtain */}
+          <div style={{
+            position: 'fixed',
+            top: Math.max(0, highlightRect.top - pad),
+            left: highlightRect.right + pad,
+            right: 0,
+            height: highlightRect.height + pad * 2,
+            background: 'rgba(0,0,0,0.72)',
+            zIndex: 100,
+            pointerEvents: 'none'
+          }} />
+
+          {/* HIGHLIGHT BORDER */}
+          <div style={{
+            position: 'fixed',
+            top: highlightRect.top - pad,
+            left: highlightRect.left - pad,
+            width: highlightRect.width + pad * 2,
+            height: highlightRect.height + pad * 2,
+            border: '2.5px solid #00D09C',
+            borderRadius: '14px',
+            boxShadow: '0 0 0 3px rgba(0,209,156,0.15)',
+            zIndex: 101,
+            pointerEvents: 'none',
+            transition: 'all 250ms ease'
+          }} />
+        </>
       )}
 
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.9, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="relative z-[102] bg-white rounded-2xl p-5 shadow-2xl max-w-[320px] w-full pointer-events-auto border border-[#F0F0F0]"
-        style={highlightRect ? {
-          position: 'absolute',
-          top: highlightRect.bottom + 20 > window.innerHeight - 200 ? highlightRect.top - 200 : highlightRect.bottom + 20,
-          left: '50%',
-          transform: 'translateX(-50%)'
-        } : {}}
-      >
-        <div className="flex gap-2 mb-4">
-          {steps.map((_, i) => (
-            <div 
-              key={i} 
-              className={`h-1.5 flex-1 rounded-full transition-all duration-300 ${i === currentStep ? 'bg-primary w-4' : 'bg-[#E0E0E0]'}`} 
-            />
-          ))}
-        </div>
-        
-        <h3 className="text-title mb-2">{steps[currentStep].title}</h3>
-        <p className="text-body leading-relaxed mb-6">{steps[currentStep].body}</p>
-        
-        <div className="flex items-center justify-between gap-4">
-          <button 
-            onClick={handleSkip}
-            className="text-[13px] text-text-3 font-bold h-11 px-4 btn-interactive"
+      {/* Step 0 Backdrop (Full screen dark overlay) */}
+      {isStep0 && (
+        <div className="absolute inset-0 bg-black/72 z-[99] pointer-events-auto" />
+      )}
+
+      <AnimatePresence mode="wait">
+        {isStep0 ? (
+          /* Step 0 - Welcome Modal */
+          <motion.div
+            key="welcome"
+            initial={{ opacity: 0, scale: 0.9, x: '-50%', y: '-40%' }}
+            animate={{ opacity: 1, scale: 1, x: '-50%', y: '-50%' }}
+            exit={{ opacity: 0, scale: 0.9, x: '-50%', y: '-40%' }}
+            className="fixed top-1/2 left-1/2 z-[102] bg-white rounded-[20px] p-6 shadow-2xl w-[calc(100%-32px)] max-w-[380px] pointer-events-auto"
           >
-            Skip
-          </button>
-          <button 
-            onClick={handleNext}
-            className="bg-primary text-white text-[13px] font-bold px-6 py-2 rounded-xl h-11 flex items-center shadow-primary btn-interactive"
+            <h2 className="text-[18px] font-bold text-[#1F1F1F] mb-2 leading-tight">
+              {steps[0].title}
+            </h2>
+            <p className="text-[14px] text-[#717171] leading-relaxed mb-6">
+              {steps[0].body}
+            </p>
+            <button
+              onClick={handleNext}
+              className="w-full bg-primary text-white text-[14px] font-bold py-3.5 rounded-xl btn-interactive"
+            >
+              Start Tour →
+            </button>
+          </motion.div>
+        ) : (
+          /* Other Steps - Bottom Sheet */
+          <motion.div
+            key="step"
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="fixed bottom-0 left-0 right-0 z-[102] bg-white rounded-t-[20px] p-5 pb-9 shadow-[0_-8px_32px_rgba(0,0,0,0.2)] max-w-[430px] mx-auto w-full pointer-events-auto box-border"
           >
-            {currentStep === steps.length - 1 ? "Start exploring" : "Next →"}
-          </button>
-        </div>
-      </motion.div>
+            {/* Drag Handle */}
+            <div className="w-8 h-1 bg-[#E0E0E0] rounded-full mx-auto mb-4" />
+
+            {/* Step Dots Row */}
+            <div className="flex justify-center gap-2 mb-4">
+              {steps.slice(1).map((_, i) => {
+                const stepIdx = i + 1;
+                const isActive = stepIdx === currentStep;
+                return (
+                  <motion.div
+                    key={i}
+                    initial={false}
+                    animate={{ 
+                      width: isActive ? 24 : 8,
+                      backgroundColor: isActive ? '#00D09C' : '#E0E0E0'
+                    }}
+                    transition={{ duration: 0.2, ease: 'easeOut' }}
+                    className="h-2 rounded-full"
+                  />
+                );
+              })}
+            </div>
+
+            <h3 className="text-[17px] font-bold text-[#1F1F1F] mb-2 leading-[1.3]">
+              {steps[currentStep].title}
+            </h3>
+            <p className="text-[14px] text-[#717171] leading-relaxed mb-5">
+              {steps[currentStep].body}
+            </p>
+
+            <div className="flex items-center justify-between">
+              <button
+                onClick={handleSkip}
+                className="text-[13px] font-medium text-[#BDBDBD] py-2 cursor-pointer"
+              >
+                Skip tour
+              </button>
+              <button
+                onClick={handleNext}
+                className="bg-primary text-white text-[14px] font-semibold px-6 py-3 rounded-[10px] min-w-[120px] text-center cursor-pointer btn-interactive"
+              >
+                {currentStep === steps.length - 1 ? "Start exploring" : "Next →"}
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

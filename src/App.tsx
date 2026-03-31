@@ -266,6 +266,7 @@ export default function App() {
           <OnboardingTour 
             onComplete={() => setTourActive(false)} 
             onStepChange={handleTourStepChange}
+            currentScreen={currentScreen}
           />
         )}
       </div>

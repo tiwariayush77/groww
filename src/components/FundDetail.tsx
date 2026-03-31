@@ -9,11 +9,11 @@ interface FundDetailProps {
 const FundDetail: React.FC<FundDetailProps> = ({ navigateTo }) => {
   return (
     <div className="flex flex-col pb-24 gap-6 pt-3">
-      {/* Fund header */}
-      <section className="px-4">
-        <div className="bg-white rounded-xl p-4 shadow-secondary border-light">
+      {/* Fund header - Refactored to remove card soup */}
+      <section>
+        <div className="mx-4 border-t border-[#F0F0F0] py-6">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-full bg-groww-blue/10 flex items-center justify-center text-groww-blue font-bold text-xl border border-groww-blue/20">
+            <div className="w-14 h-14 rounded-xl bg-groww-blue/10 flex items-center justify-center text-groww-blue font-bold text-xl border border-groww-blue/20">
               MI
             </div>
             <div className="flex-1">
@@ -39,9 +39,9 @@ const FundDetail: React.FC<FundDetailProps> = ({ navigateTo }) => {
         </div>
       </section>
 
-      {/* Returns comparison */}
-      <section className="px-4">
-        <div className="bg-white rounded-xl p-4 shadow-secondary border-light">
+      {/* Returns comparison - Refactored to remove card soup */}
+      <section>
+        <div className="mx-4 border-t border-[#F0F0F0] py-6">
           <h3 className="text-title mb-5">Return Comparison</h3>
           
           <div className="flex flex-col gap-5">

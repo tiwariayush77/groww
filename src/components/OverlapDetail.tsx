@@ -66,9 +66,9 @@ const OverlapDetail: React.FC<OverlapDetailProps> = ({ navigateTo }) => {
         </div>
       </section>
 
-      {/* AI Recommendation */}
-      <section className="px-4">
-        <div className="bg-white rounded-xl p-5 shadow-secondary border-light">
+      {/* AI Recommendation - Refactored to remove card soup */}
+      <section>
+        <div className="mx-4 border-t border-[#F0F0F0] py-6">
           <div className="flex items-center justify-between mb-5">
             <span className="text-title flex items-center gap-2">
               <Icons.Zap className="w-4 h-4 text-primary" /> AI Recommendation
@@ -79,7 +79,7 @@ const OverlapDetail: React.FC<OverlapDetailProps> = ({ navigateTo }) => {
           </div>
           
           <div className="flex items-center gap-4 bg-[#F7F8FA] p-3 rounded-xl border border-[#F0F0F0]">
-            <div className="w-10 h-10 rounded-full bg-groww-amber/10 flex items-center justify-center text-groww-amber font-bold text-xs border border-groww-amber/20">
+            <div className="w-10 h-10 rounded-xl bg-groww-amber/10 flex items-center justify-center text-groww-amber font-bold text-xs border border-groww-amber/20">
               UT
             </div>
             <div className="flex-1">
