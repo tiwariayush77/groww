@@ -1,0 +1,103 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-primary: #00D09C;
+  --color-primary-dark: #00B386;
+  --color-primary-bg: #E8FAF5;
+  --color-app-bg: #F7F8FA;
+  --color-text-1: #1F1F1F;
+  --color-text-2: #717171;
+  --color-text-3: #9E9E9E;
+  --color-groww-green: #00B386;
+  --color-groww-red: #E74C3C;
+  --color-groww-amber: #FF9800;
+  --color-groww-amber-bg: #FFF8E6;
+  --color-groww-blue: #3B82F6;
+  --color-groww-blue-bg: #EFF6FF;
+  --color-groww-purple: #8B5CF6;
+  --color-groww-purple-bg: #F5F3FF;
+  --color-border-color: #EFEFEF;
+}
+
+@utility text-display {
+  @apply text-[28px] font-bold text-text-1 tracking-[-0.5px];
+}
+@utility text-title {
+  @apply text-[16px] font-bold text-text-1 tracking-[-0.2px];
+}
+@utility text-body {
+  @apply text-[13px] font-normal text-text-2 leading-[1.55];
+}
+@utility text-label {
+  @apply text-[11px] font-medium text-text-3 tracking-[0.3px];
+}
+@utility text-micro {
+  @apply text-[10px] font-semibold text-text-3 tracking-[0.8px] uppercase;
+}
+
+@utility shadow-primary {
+  @apply shadow-[0_2px_12px_rgba(0,0,0,0.08)];
+}
+@utility shadow-secondary {
+  @apply shadow-[0_1px_4px_rgba(0,0,0,0.05)];
+}
+@utility border-light {
+  @apply border border-[#F2F2F2];
+}
+
+@utility interactive {
+  @apply active:scale-[0.98] transition-all duration-100 ease-out;
+}
+@utility btn-interactive {
+  @apply active:brightness-[0.92] active:scale-[0.98] transition-all duration-100 ease-out;
+}
+
+@layer base {
+  body {
+    @apply bg-[#E8EAED] font-sans text-text-1 antialiased;
+  }
+}
+
+.indian-number::before {
+  content: "₹";
+}
+
+/* Custom scrollbar for mobile feel */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.shadow-groww {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+.shadow-groww-sm {
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.spotlight-hole {
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.65);
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(.33); }
+  80%, 100% { opacity: 0; }
+}
+
+@keyframes pulse-dot {
+  0% { transform: scale(.8); }
+  50% { transform: scale(1); }
+  100% { transform: scale(.8); }
+}

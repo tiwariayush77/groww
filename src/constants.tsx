@@ -1,0 +1,48 @@
+import React from 'react';
+import { 
+  Home, 
+  Target, 
+  BarChart3, 
+  PieChart, 
+  Receipt, 
+  Bell, 
+  Search, 
+  Filter, 
+  ChevronRight, 
+  ArrowLeft, 
+  Plus, 
+  TrendingUp, 
+  TrendingDown,
+  Activity, 
+  Repeat,
+  AlertTriangle,
+  AlertCircle,
+  Shield,
+  Zap,
+  Download,
+  Info
+} from 'lucide-react';
+
+export const Icons = {
+  Home,
+  Goals: Target,
+  Portfolio: BarChart3,
+  MF: PieChart,
+  Tax: Receipt,
+  Bell,
+  Search,
+  Filter,
+  ChevronRight,
+  ArrowLeft,
+  Plus,
+  TrendingUp,
+  TrendingDown,
+  Activity,
+  Repeat,
+  AlertTriangle,
+  AlertCircle,
+  Shield,
+  Zap,
+  Download,
+  Info
+};
