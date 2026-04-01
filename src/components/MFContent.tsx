@@ -60,7 +60,7 @@ const MFContent: React.FC<MFContentProps> = ({ navigateTo }) => {
           <div className="flex-1">
             <div className="flex items-center gap-2">
               <Icons.AlertTriangle className="w-4 h-4 text-groww-amber" />
-              <span className="text-title text-text-1">Portfolio Overlap Detected</span>
+              <span className="text-title text-text-1">⚠ Portfolio Overlap Detected · Tap to see AI fix</span>
             </div>
             <p className="text-body mt-1 pl-6">
               64% of your holdings repeat · ₹3,800/yr in extra fees

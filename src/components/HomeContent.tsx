@@ -1,15 +1,34 @@
-import React from 'react';
-import { motion } from 'motion/react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Icons } from '../constants.tsx';
 import { Screen } from '../types.ts';
+import OverlapModal from './OverlapModal.tsx';
 
 interface HomeContentProps {
   navigateTo: (screen: Screen) => void;
   isCrashSimActive: boolean;
   setIsCrashSimActive: (active: boolean) => void;
+  isOverlapModalOpen: boolean;
+  setIsOverlapModalOpen: (open: boolean) => void;
 }
 
-const HomeContent: React.FC<HomeContentProps> = ({ navigateTo, isCrashSimActive, setIsCrashSimActive }) => {
+const HomeContent: React.FC<HomeContentProps> = ({ 
+  navigateTo, 
+  isCrashSimActive, 
+  setIsCrashSimActive,
+  isOverlapModalOpen,
+  setIsOverlapModalOpen
+}) => {
+  const [isOverlapAlertDismissed, setIsOverlapAlertDismissed] = useState(() => {
+    return localStorage.getItem('groww_overlap_alert_dismissed') === 'true';
+  });
+
+  const handleDismissOverlapAlert = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsOverlapAlertDismissed(true);
+    localStorage.setItem('groww_overlap_alert_dismissed', 'true');
+  };
+
   return (
     <div className="flex flex-col pb-6 gap-6 pt-3">
       {/* Portfolio Snapshot */}
@@ -104,6 +123,17 @@ const HomeContent: React.FC<HomeContentProps> = ({ navigateTo, isCrashSimActive,
                   <div className="flex items-center gap-2">
                     <div className={`w-1.5 h-1.5 rounded-full ${item.color}`} />
                     <span className="text-label">{item.label}</span>
+                    {item.label === 'Diversification' && (
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsOverlapModalOpen(true);
+                        }}
+                        className="ml-1.5 bg-[#FFF8E6] text-[#FF9800] text-[10px] font-bold px-2 py-0.5 rounded-full btn-interactive flex items-center gap-1"
+                      >
+                        ⚠ Fix now
+                      </button>
+                    )}
                   </div>
                   <span className="text-[11px] font-bold text-text-1">{item.score}</span>
                 </div>
@@ -122,6 +152,78 @@ const HomeContent: React.FC<HomeContentProps> = ({ navigateTo, isCrashSimActive,
           </div>
         </div>
       </section>
+
+      {/* PART 1 — HOME SCREEN: OVERLAP ALERT CARD */}
+      <AnimatePresence>
+        {!isOverlapAlertDismissed && (
+          <motion.section 
+            id="tour-overlap-card"
+            initial={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0, marginTop: 0, marginBottom: 0 }}
+            transition={{ duration: 0.3 }}
+            className="px-4 overflow-hidden"
+          >
+            <div 
+              onClick={() => setIsOverlapModalOpen(true)}
+              className="mt-[10px] bg-white rounded-[14px] border-[1.5px] border-[#FFE0B2] p-4 shadow-[0_2px_12px_rgba(255,152,0,0.10)] cursor-pointer active:scale-[0.98] transition-transform duration-100"
+            >
+              {/* ROW 1 */}
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-2">
+                  <div 
+                    className="w-2 h-2 rounded-full bg-[#FF9800] flex-shrink-0 mt-[2px]" 
+                    style={{ animation: 'pulse 2s infinite' }}
+                  />
+                  <span className="text-[11px] font-semibold text-[#FF9800]">Overlap alert</span>
+                </div>
+                <button 
+                  onClick={handleDismissOverlapAlert}
+                  className="p-[2px] text-[#BDBDBD] cursor-pointer"
+                >
+                  <Icons.X className="w-[18px] h-[18px]" />
+                </button>
+              </div>
+
+              {/* ROW 2 */}
+              <h3 className="text-[16px] font-bold text-[#1F1F1F] mt-2 leading-[1.3]">
+                7 funds, 3 real portfolios
+              </h3>
+
+              {/* ROW 3 */}
+              <p className="text-[13px] font-normal text-[#717171] mt-1.5 leading-[1.55]">
+                Reliance, HDFC Bank, and Infosys appear across 5–6 of your funds. You're paying expense ratios on the same stocks — repeatedly.
+              </p>
+
+              {/* ROW 4 */}
+              <div className="flex flex-wrap gap-2 mt-3">
+                <div className="bg-[#FFF3E0] rounded-[6px] px-2.5 py-1.5">
+                  <span className="text-[12px] font-medium text-[#FF9800]">₹3,800 extra in fees every year</span>
+                </div>
+                <div className="bg-[#FFF0F0] rounded-[6px] px-2.5 py-1.5">
+                  <span className="text-[12px] font-medium text-[#E74C3C]">Returns dragged by 0.8%</span>
+                </div>
+              </div>
+
+              {/* ROW 5 */}
+              <div className="flex items-center justify-between mt-3.5 pt-3 border-t border-[#F5F5F5]">
+                <span className="text-[13px] font-semibold text-[#FF9800]">See what to remove →</span>
+                <div className="h-5 flex items-end gap-[3px]">
+                  {[20, 17, 17, 13, 10].map((h, i) => (
+                    <div 
+                      key={i} 
+                      className="w-[5px] rounded-t-[3px]" 
+                      style={{ 
+                        height: `${h}px`, 
+                        backgroundColor: i === 0 ? '#E74C3C' : i < 4 ? '#FF9800' : '#F59E0B' 
+                      }} 
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.section>
+        )}
+      </AnimatePresence>
 
       {/* Feature 3: Tax Harvest Alert */}
       <section className="px-4">
@@ -251,6 +353,15 @@ const HomeContent: React.FC<HomeContentProps> = ({ navigateTo, isCrashSimActive,
           ))}
         </div>
       </section>
+      
+      <OverlapModal 
+        isOpen={isOverlapModalOpen} 
+        onClose={() => setIsOverlapModalOpen(false)}
+        onNavigateToMF={() => {
+          setIsOverlapModalOpen(false);
+          navigateTo('mf');
+        }}
+      />
     </div>
   );
 };

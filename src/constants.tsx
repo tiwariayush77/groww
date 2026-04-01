@@ -20,7 +20,9 @@ import {
   Shield,
   Zap,
   Download,
-  Info
+  Info,
+  X,
+  Check
 } from 'lucide-react';
 
 export const Icons = {
@@ -44,5 +46,7 @@ export const Icons = {
   Shield,
   Zap,
   Download,
-  Info
+  Info,
+  X,
+  Check
 };

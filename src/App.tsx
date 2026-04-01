@@ -23,6 +23,7 @@ export default function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>('splash');
   const [tourActive, setTourActive] = useState(false);
   const [isCrashSimActive, setIsCrashSimActive] = useState(false);
+  const [isOverlapModalOpen, setIsOverlapModalOpen] = useState(false);
 
   useEffect(() => {
     if (currentScreen === 'splash') {
@@ -41,9 +42,17 @@ export default function App() {
   };
 
   const handleTourStepChange = (step: number) => {
-    if (step === 3) setCurrentScreen('mf');
+    if (step >= 1 && step <= 3) setCurrentScreen('home');
     else if (step === 4) setCurrentScreen('goals');
     else if (step === 5) setCurrentScreen('home');
+  };
+
+  const handleTourComplete = () => {
+    setTourActive(false);
+    setCurrentScreen('home');
+    setTimeout(() => {
+      setIsOverlapModalOpen(true);
+    }, 300);
   };
 
   const renderTopBar = () => {
@@ -247,6 +256,8 @@ export default function App() {
                   navigateTo={navigateTo} 
                   isCrashSimActive={isCrashSimActive}
                   setIsCrashSimActive={setIsCrashSimActive}
+                  isOverlapModalOpen={isOverlapModalOpen}
+                  setIsOverlapModalOpen={setIsOverlapModalOpen}
                 />
               )}
               {currentScreen === 'goals' && <GoalsContent navigateTo={navigateTo} />}
@@ -264,7 +275,7 @@ export default function App() {
 
         {tourActive && (
           <OnboardingTour 
-            onComplete={() => setTourActive(false)} 
+            onComplete={handleTourComplete} 
             onStepChange={handleTourStepChange}
             currentScreen={currentScreen}
           />

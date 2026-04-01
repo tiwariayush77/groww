@@ -10,32 +10,32 @@ interface TourStep {
 const steps: TourStep[] = [
   {
     title: "Welcome to the Groww AI Prototype",
-    body: "This prototype demos 6 AI-powered improvements grounded in real user pain points. Take the 60-second tour to see each feature.",
+    body: "6 features built on real user pain points. Takes 60 seconds. Tap to begin.",
   },
   {
     title: "Your Portfolio Health Score",
-    body: "A single 0–100 score that tells you how well your portfolio is doing across 4 dimensions. No more guessing.",
+    body: "One number that tells you how your portfolio is doing — across returns, diversification, goals, and safety. No more guessing.",
     highlightId: "tour-health-score",
   },
   {
-    title: "₹15,500 in tax savings — unclaimed",
-    body: "It's April 1. The new financial year just started. Groww could have reminded you to book profits before the deadline. Now you know for next year.",
+    title: "₹15,500 left on the table",
+    body: "It's April 1. This card would have reminded you to book profits before the FY ended — completely tax-free under the ₹1.25L LTCG exemption.",
     highlightId: "tour-tax-alert",
   },
   {
-    title: "You own 7 funds but 3 portfolios",
-    body: "64% of your holdings repeat across funds. This costs you ₹3,800/year in extra fees with no diversification benefit.",
-    highlightId: "tour-overlap-ribbon",
+    title: "Your panic-pause guard",
+    body: "When markets crash, most investors pause their SIPs and lose ₹4–5L over a decade. Toggle the switch to see how Groww intercepts that decision.",
+    highlightId: "tour-crash-guard",
   },
   {
-    title: "Your goals need a plan",
-    body: "Your current SIPs will fall ₹16L short of your house goal. The gap calculator shows exactly what to add.",
+    title: "Your goals have a ₹16L gap",
+    body: "Your education SIP is on track to fall short. The gap calculator shows exactly how much to add and which fund to add it to.",
     highlightId: "tour-goal-gap",
   },
   {
-    title: "What happens when you panic",
-    body: "When markets fall, most investors pause SIPs and lose ₹4–5L over a decade. Tap the simulation to see the intervention.",
-    highlightId: "tour-crash-guard",
+    title: "You're paying for 7 funds, getting 3",
+    body: "64% of your holdings repeat across funds. This is the most actionable fix in your portfolio — tap the card to see the full report.",
+    highlightId: "tour-overlap-card",
   },
 ];
 
@@ -252,7 +252,7 @@ export const OnboardingTour: React.FC<OnboardingTourProps> = ({ onComplete, onSt
                 onClick={handleNext}
                 className="bg-primary text-white text-[14px] font-semibold px-6 py-3 rounded-[10px] min-w-[120px] text-center cursor-pointer btn-interactive"
               >
-                {currentStep === steps.length - 1 ? "Start exploring" : "Next →"}
+                {currentStep === steps.length - 1 ? "See the overlap report →" : "Next →"}
               </button>
             </div>
           </motion.div>
